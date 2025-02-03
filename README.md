@@ -12,7 +12,7 @@ A web application built with Django that fetches and displays real-time weather 
 ### Steps
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/yourusername/project_weather_app.git
+    git clone https://github.com/mrrayhan246/project_weather_app.git
     cd project_weather_app
     ```
 
@@ -62,18 +62,15 @@ Contributions are welcome! Please follow these steps to contribute:
 5. Create a pull request describing your changes.
 
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
 
 ## Contact
 If you have any questions or feedback, please feel free to reach out:
-- **Name**: Your Name
-- **Email**: yourname@example.com
+- **Name**: Md. Raihanul Islam (Rayhan)
+- **Email**: mrrayhan246@gmail.com
 
 
 ![Django](https://img.shields.io/badge/Django-3.2-green)
 ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-2.2-blue)
-![GitHub](https://img.shields.io/github/license/yourusername/project_weather_app)
+![GitHub](https://img.shields.io/github/license/mrrayhan246/project_weather_app)
 
 ![Weather App Screenshot](./weather.png)
