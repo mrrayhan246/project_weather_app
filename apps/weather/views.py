@@ -12,5 +12,5 @@ def index(request):
             'city': city,
             'data': data,
         }
-        return render(request, 'weather/index.html', context)
-    return render(request, 'weather/index.html')
+        return render(request, 'index.html', context)
+    return render(request, 'index.html')
