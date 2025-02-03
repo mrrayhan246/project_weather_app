@@ -1,0 +1,8 @@
+=====| Virtual Environment Command |=====
+create command: py -m venv venv
+active command: venv\Scripts\activate.bat
+install command: pip install -r requirements.txt
+
+check command: py manage.py makemigrations
+create command: py manage.py migrate
+run command: py manage.py runserver
