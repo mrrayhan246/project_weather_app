@@ -6,6 +6,13 @@
     <title>Weather App</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script>
+        const countries = [
+            { code: 'US', name: 'United States' },
+            { code: 'CA', name: 'Canada' },
+            { code: 'GB', name: 'United Kingdom' },
+            // Add more country codes and names here
+        ];
+
         const citiesByCountry = {
             'US': ['New York', 'Los Angeles', 'Chicago'],
             'CA': ['Toronto', 'Vancouver', 'Montreal'],
@@ -32,7 +39,18 @@
             }
         }
 
+        function populateCountries() {
+            const countrySelect = document.getElementById('country');
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.text = country.name;
+                countrySelect.appendChild(option);
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            populateCountries();  // Populate countries on page load
             updateCities();  // Update cities on page load
         });
     </script>
@@ -43,10 +61,7 @@
         <form method="POST" class="mb-6">
             {% csrf_token %}
             <select id="country" name="country" class="p-2 border rounded shadow-md mr-2" onchange="updateCities()">
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="GB">United Kingdom</option>
-                <!-- Add more countries as needed -->
+                <!-- Countries will be populated here -->
             </select>
             <select id="city" name="city" class="p-2 border rounded shadow-md mr-2">
                 <!-- Cities will be populated based on selected country -->
@@ -59,6 +74,8 @@
             <p class="text-lg">Temperature: {{ data.main.temp }}°C</p>
             <p class="text-lg">Weather: {{ data.weather.0.description }}</p>
         </div>
+        {% else %}
+        <p class="text-lg text-red-500">No data available for the selected city.</p>
         {% endif %}
     </div>
 </body>
