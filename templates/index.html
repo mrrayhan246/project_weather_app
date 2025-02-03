@@ -25,6 +25,7 @@
     </style>
     <script>
         const countries = [
+            { code: 'BD', name: 'Bangladesh' },
             { code: 'US', name: 'United States' },
             { code: 'CA', name: 'Canada' },
             { code: 'GB', name: 'United Kingdom' },
@@ -36,10 +37,10 @@
             { code: 'CN', name: 'China' },
             { code: 'BR', name: 'Brazil' },
             { code: 'ZA', name: 'South Africa' },
-            { code: 'BD', name: 'Bangladesh' }
         ];
 
         const citiesByCountry = {
+            'BD': ['Dhaka', 'Chittagong', 'Khulna', 'Rajshahi', 'Sylhet', 'Rangpur', 'Barisal'],
             'US': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
             'CA': ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'],
             'GB': ['London', 'Manchester', 'Birmingham', 'Liverpool', 'Edinburgh'],
@@ -51,7 +52,6 @@
             'CN': ['Beijing', 'Shanghai', 'Shenzhen', 'Guangzhou', 'Chengdu'],
             'BR': ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza'],
             'ZA': ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth'],
-            'BD': ['Dhaka', 'Chittagong', 'Khulna', 'Rajshahi', 'Sylhet']
         };
 
         function updateCities() {
@@ -111,15 +111,15 @@
             <button type="submit" class="p-2 bg-blue-500 text-white rounded shadow-md hover:bg-blue-700 transition ease-in-out duration-300">Get Weather</button>
         </form>
         {% if data %}
-        <div class="card bg-white p-6 rounded shadow-lg mt-6">
-            <h2 class="text-2xl font-semibold mb-4 text-gray-800">{{ city }}</h2>
-            <p class="text-lg text-gray-700">Temperature: {{ data.main.temp }}°C</p>
-            <p class="text-lg text-gray-700">Weather: {{ data.weather.0.description }}</p>
+        <div class="card bg-white p-10 rounded shadow-lg mt-6">
+            <h2 class="text-3xl font-semibold mb-4 text-gray-200">{{ city }}</h2>
+            <p class="text-2xl text-gray-200">Temperature: {{ data.main.temp }}°C</p>
+            <p class="text-xl text-gray-200">Weather: {{ data.weather.0.description }}</p>
         </div>
         {% else %}
         <p class="text-lg text-red-500">No data available for the selected city.</p>
         {% endif %}
-        <footer class="mt-8 text-gray-400">
+        <footer class="mt-8 text-gray-200">
             <p>Contact us at <a href="mailto:info@weatherapp.com" class="text-blue-300 hover:underline">info@weatherapp.com</a></p>
             <p>&copy; 2025 Weather App. All rights reserved.</p>
         </footer>
