@@ -111,3 +111,95 @@ document.addEventListener('DOMContentLoaded', () => {
     button.style.transform = 'scale(1)';
   });
 });
+
+
+
+
+
+
+// =============================
+    // 🌍 Demo JavaScript Logic
+    // =============================
+
+    // ✅ Country list
+    const counstries = [
+      { code: 'BD', name: 'Bangladesh' },
+      { code: 'US', name: 'United States' },
+      { code: 'IN', name: 'India' },
+      { code: 'GB', name: 'United Kingdom' },
+      { code: 'JP', name: 'Japan' },
+    ];
+
+    // ✅ Cities by country
+    const citiesBysCountry = {
+      'BD': ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi'],
+      'US': ['New York', 'Los Angeles', 'Chicago', 'Houston'],
+      'IN': ['Delhi', 'Mumbai', 'Bangalore', 'Chennai'],
+      'GB': ['London', 'Manchester', 'Liverpool', 'Bristol'],
+      'JP': ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya'],
+    };
+
+    // ✅ Fake weather data for demo
+    const demoWeatherData = [
+      { temp: 30, condition: 'Sunny' },
+      { temp: 26, condition: 'Cloudy' },
+      { temp: 22, condition: 'Rainy' },
+      { temp: 18, condition: 'Stormy' },
+      { temp: 12, condition: 'Windy' },
+      { temp: 15, condition: 'Foggy' },
+    ];
+
+    // ✅ Populate countries on page load
+    function populateCountries() {
+      const countrySelect = document.getElementById('country');
+      countries.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.code;
+        opt.textContent = c.name;
+        countrySelect.appendChild(opt);
+      });
+      updateCities(); // Load default cities
+    }
+
+    // ✅ Update cities when a country changes
+    function updateCities() {
+      const country = document.getElementById('country').value;
+      const citySelect = document.getElementById('city');
+      citySelect.innerHTML = '';
+
+      (citiesByCountry[country] || []).forEach(city => {
+        const opt = document.createElement('option');
+        opt.value = city;
+        opt.textContent = city;
+        citySelect.appendChild(opt);
+      });
+    }
+
+    // ✅ Generate random weather data for demo
+    function getDemoWeather() {
+      const random = demoWeatherData[Math.floor(Math.random() * demoWeatherData.length)];
+      return random;
+    }
+
+    // ✅ Handle form submission
+    document.getElementById('weatherForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const country = document.getElementById('country').value;
+      const city = document.getElementById('city').value;
+      const { temp, condition } = getDemoWeather();
+
+      document.getElementById('weatherCity').textContent = `${city}, ${country}`;
+      document.getElementById('weatherTemp').textContent = `🌡️ Temperature: ${temp}°C`;
+      document.getElementById('weatherCondition').textContent = `☁️ Condition: ${condition}`;
+
+      const card = document.getElementById('weatherCard');
+      card.classList.remove('hidden');
+      card.classList.add('fade-in');
+    });
+
+    // ✅ Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      populateCountries();
+      document.getElementById('country').addEventListener('change', updateCities);
+    });
