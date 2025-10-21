@@ -1,128 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: url('https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?cs=srgb&dl=pexels-jplenio-1118873.jpg&fm=jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.13);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-        }
-        .card {
-            transition: transform 0.3s ease-in-out;
-            background-color: rgba(255, 255, 255, 0.13);
-        }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-    </style>
-    <script>
-        const countries = [
-            { code: 'BD', name: 'Bangladesh' },
-            { code: 'US', name: 'United States' },
-            { code: 'CA', name: 'Canada' },
-            { code: 'GB', name: 'United Kingdom' },
-            { code: 'AU', name: 'Australia' },
-            { code: 'IN', name: 'India' },
-            { code: 'DE', name: 'Germany' },
-            { code: 'FR', name: 'France' },
-            { code: 'JP', name: 'Japan' },
-            { code: 'CN', name: 'China' },
-            { code: 'BR', name: 'Brazil' },
-            { code: 'ZA', name: 'South Africa' },
-        ];
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
 
-        const citiesByCountry = {
-            'BD': ['Dhaka', 'Chittagong', 'Khulna', 'Rajshahi', 'Sylhet', 'Rangpur', 'Barisal', 'Mymensingh'],
-            'US': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
-            'CA': ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'],
-            'GB': ['London', 'Manchester', 'Birmingham', 'Liverpool', 'Edinburgh'],
-            'AU': ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'],
-            'IN': ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai'],
-            'DE': ['Berlin', 'Munich', 'Frankfurt', 'Hamburg', 'Stuttgart'],
-            'FR': ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice'],
-            'JP': ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya', 'Fukuoka'],
-            'CN': ['Beijing', 'Shanghai', 'Shenzhen', 'Guangzhou', 'Chengdu'],
-            'BR': ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza'],
-            'ZA': ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth'],
-        };
+  <!-- ✅ Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-        function updateCities() {
-            const countrySelect = document.getElementById('country');
-            const citySelect = document.getElementById('city');
-            const selectedCountry = countrySelect.value;
+  <!-- ✅ Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-            // Clear city options
-            citySelect.innerHTML = '';
+  <style>
+    /* 🌤️ Background setup */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+    }
 
-            // Populate city options based on selected country
-            if (selectedCountry in citiesByCountry) {
-                citiesByCountry[selectedCountry].forEach(city => {
-                    const option = document.createElement('option');
-                    option.value = city;
-                    option.text = city;
-                    citySelect.appendChild(option);
-                });
-            } else {
-                const option = document.createElement('option');
-                option.value = '';
-                option.text = 'No cities available';
-                citySelect.appendChild(option);
-            }
-        }
+    /* 🌫️ Glassmorphism container */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease-in-out;
+    }
 
-        function populateCountries() {
-            const countrySelect = document.getElementById('country');
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.code;
-                option.text = country.name;
-                countrySelect.appendChild(option);
-            });
-            updateCities(); // Update cities when page loads
-        }
+    /* ✨ Card hover animation */
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            populateCountries();  // Populate countries on page load
-        });
-    </script>
+    /* ☁️ Floating animation */
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* 🌈 Fade-in animation for content */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+  </style>
 </head>
-<body class="flex items-center justify-center min-h-screen">
-    <div class="container mx-auto p-8 text-center shadow-lg">
-        <h1 class="text-4xl font-bold mb-6 text-gray-200">
-            <img src="https://png.pngtree.com/element_our/20190528/ourmid/pngtree-weather-icon-image_1175001.jpg" alt="Weather Logo" class="inline-block w-16 h-16 mr-2 rounded">
-            Weather App
-        </h1>
-        <form method="POST" class="mb-6">
-            {% csrf_token %}
-            <select id="country" name="country" class="p-2 border rounded shadow-md mr-2" onchange="updateCities()">
-                <!-- Countries will be populated here -->
-            </select>
-            <select id="city" name="city" class="p-2 border rounded shadow-md mr-2">
-                <!-- Cities will be populated based on selected country -->
-            </select>
-            <button type="submit" class="p-2 bg-blue-500 text-white rounded shadow-md hover:bg-blue-700 transition ease-in-out duration-300">Get Weather</button>
-        </form>
-        {% if data %}
-        <div class="card bg-white p-10 rounded shadow-lg mt-6">
-            <h2 class="text-3xl font-semibold mb-4 text-gray-200">{{ city }}</h2>
-            <p class="text-2xl text-gray-200">Temperature: {{ data.main.temp }}°C</p>
-            <p class="text-xl text-gray-200">Weather: {{ data.weather.0.description }}</p>
-        </div>
-        {% else %}
-        <p class="text-lg text-red-500">No data available for the selected city.</p>
-        {% endif %}
-        <footer class="mt-8 text-gray-200">
-            <p>Contact us at <a href="mailto:info@weatherapp.com" class="text-blue-300 hover:underline">info@weatherapp.com</a></p>
-            <p>&copy; 2025 Weather App. All rights reserved.</p>
-        </footer>
+
+<body class="flex items-center justify-center p-6">
+
+  <!-- 🌤️ Main Container -->
+  <div class="glass-card w-full max-w-2xl p-8 rounded-2xl shadow-lg text-center fade-in">
+    
+    <!-- 🌦️ App Header -->
+    <div class="mb-8">
+      <img src="https://cdn-icons-png.flaticon.com/512/1163/1163661.png" alt="Weather Icon" class="w-20 h-20 mx-auto mb-4 floating">
+      <h1 class="text-4xl font-extrabold text-white drop-shadow-lg">Weather Forecast</h1>
+      <p class="text-gray-200 mt-2">Get real-time weather updates by city & country 🌍</p>
     </div>
+
+    <!-- 🌍 Country & City Form -->
+    <form method="POST" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 fade-in">
+      {% csrf_token %}
+      <select id="country" name="country" class="p-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition" onchange="updateCities()">
+        <!-- Populated dynamically -->
+      </select>
+      <select id="city" name="city" class="p-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+        <!-- Populated dynamically -->
+      </select>
+      <button type="submit" class="px-6 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-transform transform hover:scale-105">Get Weather</button>
+    </form>
+
+    <!-- 🌡️ Weather Data Display -->
+    {% if data %}
+    <div class="glass-card p-6 rounded-xl mt-6 fade-in">
+      <h2 class="text-3xl font-semibold text-white mb-2">{{ city }}</h2>
+      <p class="text-2xl text-gray-200">🌡️ Temperature: {{ data.main.temp }}°C</p>
+      <p class="text-xl text-gray-200 capitalize">☁️ Condition: {{ data.weather.0.description }}</p>
+    </div>
+    {% else %}
+    <p class="text-lg text-red-300 font-medium mt-6 fade-in">⚠️ No data available for the selected city.</p>
+    {% endif %}
+
+    <!-- 🌐 Footer -->
+    <footer class="mt-10 text-gray-300 text-sm">
+      <p>Contact us at <a href="mailto:info@weatherapp.com" class="text-blue-300 hover:underline">info@weatherapp.com</a></p>
+      <p>&copy; 2025 <span class="font-semibold">Weather App</span>. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- 🌎 JavaScript Section -->
+  <script>
+    // ✅ Country list
+    const countries = [
+      { code: 'BD', name: 'Bangladesh' },
+      { code: 'US', name: 'United States' },
+      { code: 'CA', name: 'Canada' },
+      { code: 'GB', name: 'United Kingdom' },
+      { code: 'AU', name: 'Australia' },
+      { code: 'IN', name: 'India' },
+      { code: 'DE', name: 'Germany' },
+      { code: 'FR', name: 'France' },
+      { code: 'JP', name: 'Japan' },
+      { code: 'CN', name: 'China' },
+      { code: 'BR', name: 'Brazil' },
+      { code: 'ZA', name: 'South Africa' },
+    ];
+
+    // ✅ Cities mapped by country
+    const citiesByCountry = {
+        'BD': ['Dhaka', 'Chittagong', 'Khulna', 'Rajshahi', 'Sylhet', 'Rangpur', 'Barisal', 'Mymensingh'],
+        'US': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'],
+        'CA': ['Toronto', 'Vancouver', 'Montreal', 'Calgary', 'Ottawa'],
+        'GB': ['London', 'Manchester', 'Birmingham', 'Liverpool', 'Edinburgh'],
+        'AU': ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'],
+        'IN': ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai'],
+        'DE': ['Berlin', 'Munich', 'Frankfurt', 'Hamburg', 'Stuttgart'],
+        'FR': ['Paris', 'Marseille', 'Lyon', 'Toulouse', 'Nice'],
+        'JP': ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya', 'Fukuoka'],
+        'CN': ['Beijing', 'Shanghai', 'Shenzhen', 'Guangzhou', 'Chengdu'],
+        'BR': ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza'],
+        'ZA': ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth'],
+    };
+
+    // ✅ Populate countries dropdown
+    function populateCountries() {
+      const countrySelect = document.getElementById('country');
+      countries.forEach(country => {
+        const option = document.createElement('option');
+        option.value = country.code;
+        option.text = country.name;
+        countrySelect.appendChild(option);
+      });
+      updateCities(); // Load cities for first country
+    }
+
+    // ✅ Update cities based on selected country
+    function updateCities() {
+      const country = document.getElementById('country').value;
+      const citySelect = document.getElementById('city');
+      citySelect.innerHTML = '';
+
+      if (citiesByCountry[country]) {
+        citiesByCountry[country].forEach(city => {
+          const option = document.createElement('option');
+          option.value = city;
+          option.text = city;
+          citySelect.appendChild(option);
+        });
+      } else {
+        const option = document.createElement('option');
+        option.text = 'No cities available';
+        citySelect.appendChild(option);
+      }
+    }
+
+    // ✅ Initialize on page load
+    document.addEventListener('DOMContentLoaded', populateCountries);
+  </script>
 </body>
 </html>
